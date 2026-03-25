@@ -181,7 +181,7 @@ resource "aws_key_pair" "odoo_key" {
 # ─────────────────────────────────────────────────────────────────────────────
 resource "aws_instance" "odoo" {
   ami                    = data.aws_ami.ubuntu.id             # Usa la imagen de Ubuntu que buscamos arriba
-  instance_type          = "t3a.medium"                      # Tipo de servidor: 2 vCPU, 4 GB RAM (buena relación precio/rendimiento)
+  instance_type          = "t3.medium"                       # Tipo de servidor: 2 vCPU, 4 GB RAM
   subnet_id              = aws_subnet.odoo_subnet.id         # La pone dentro de nuestra subred
   vpc_security_group_ids = [aws_security_group.odoo_sg.id]   # Le aplica nuestro firewall
   key_name               = aws_key_pair.odoo_key.key_name    # Le asigna nuestro par de claves SSH
