@@ -221,13 +221,13 @@ DOCKERFILE
 # odoo.conf define parámetros básicos de funcionamiento de Odoo.
 cat > /opt/odoo/config/odoo.conf <<'CONF'
 [options]
-addons_path = /mnt/extra-addons  # Carpeta donde buscar módulos adicionales
-data_dir = /var/lib/odoo         # Carpeta donde Odoo guarda archivos (adjuntos, etc.)
-admin_passwd = admin123          # Contraseña maestra del panel de administración de Odoo
-db_host = db                     # Nombre del host de la base de datos (nombre del contenedor Docker)
-db_port = 5432                   # Puerto estándar de PostgreSQL
-db_user = odoo                   # Usuario de la base de datos
-db_password = odoo_pass          # Contraseña de la base de datos
+addons_path = /mnt/extra-addons
+data_dir = /var/lib/odoo
+admin_passwd = admin123
+db_host = db
+db_port = 5432
+db_user = odoo
+db_password = odoo_pass
 CONF
 
 # ── Crear el archivo Docker Compose ───────────────────────────────────────────
