@@ -154,6 +154,13 @@ ssh -i odoo-key ubuntu@XX.XX.XX.XX
 sudo docker logs odoo_web_1 -f
 ```
 
+### Obtener la IP actualizada después de reiniciar la instancia
+```bash
+terraform refresh
+```
+Cuando pausás y volvés a iniciar la instancia desde la consola AWS, la IP pública cambia.
+Este comando actualiza el estado de Terraform y muestra la nueva URL en los outputs.
+
 ### Apagar todo y eliminar recursos AWS
 ```bash
 terraform destroy
