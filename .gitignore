@@ -1,0 +1,19 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+override.tf
+override.tf.json
+
+# SSH Keys - NUNCA subir al repo
+odoo-key
+odoo-key.pub
+
+# Variables de entorno
+.env
+
+# OS
+.DS_Store
+Thumbs.db

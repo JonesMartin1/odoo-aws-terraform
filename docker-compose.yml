@@ -1,0 +1,32 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo_pass
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+
+  web:
+    image: odoo:17.0
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: odoo_pass
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+
+volumes:
+  odoo-db-data:
+  odoo-web-data:
