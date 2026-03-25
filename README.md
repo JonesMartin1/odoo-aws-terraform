@@ -72,12 +72,25 @@ Esto crea dos archivos:
 ## Desplegar Odoo
 
 ### 7. Configurar credenciales AWS
-En la terminal, corre estos comandos con tus credenciales:
-```bash
+Reemplazá `TU_ACCESS_KEY_ID` y `TU_SECRET_ACCESS_KEY` con los valores que copiaste en el paso 4.
+
+Elegí el bloque según la terminal que estés usando:
+
+**Si usás CMD (símbolo del sistema):**
+```cmd
 set AWS_ACCESS_KEY_ID=TU_ACCESS_KEY_ID
 set AWS_SECRET_ACCESS_KEY=TU_SECRET_ACCESS_KEY
 set AWS_DEFAULT_REGION=sa-east-1
 ```
+
+**Si usás PowerShell:**
+```powershell
+$env:AWS_ACCESS_KEY_ID="TU_ACCESS_KEY_ID"
+$env:AWS_SECRET_ACCESS_KEY="TU_SECRET_ACCESS_KEY"
+$env:AWS_DEFAULT_REGION="sa-east-1"
+```
+
+> ⚠️ Estas variables duran solo mientras la terminal esté abierta. Si la cerrás, tenés que correrlos de nuevo antes de usar Terraform.
 
 ### 8. Inicializar Terraform
 ```bash
