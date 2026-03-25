@@ -1,4 +1,19 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# DOCKERFILE PARA LA BASE DE DATOS
+#
+# Un Dockerfile es una "receta" para construir una imagen de Docker personalizada.
+# En este caso, partimos de la imagen oficial de PostgreSQL 15 y le agregamos
+# soporte de zonas horarias, que Odoo necesita para manejar fechas correctamente.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# FROM: imagen base desde la que partimos
+# postgres:15 es la imagen oficial de PostgreSQL versión 15 en Docker Hub
 FROM postgres:15
+
+# RUN: ejecuta comandos dentro del contenedor durante la construcción de la imagen
+# Instalamos tzdata (datos de zonas horarias) y tzdata-legacy (compatibilidad
+# con zonas horarias antiguas). Al final borramos la caché de apt para que
+# la imagen final sea más liviana.
 RUN apt-get update \
     && apt-get install -y tzdata tzdata-legacy \
     && rm -rf /var/lib/apt/lists/*

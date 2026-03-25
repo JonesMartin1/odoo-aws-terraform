@@ -1,32 +1,60 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# DOCKER COMPOSE
+# Este archivo define los servicios (contenedores) que forman nuestra aplicación.
+# Con un solo comando "docker-compose up -d" levantamos todo el stack.
+#
+# La app tiene dos servicios:
+#   1. db  → Base de datos PostgreSQL
+#   2. web → Aplicación Odoo 17
+# ─────────────────────────────────────────────────────────────────────────────
 services:
+
+  # ─── SERVICIO: Base de datos ────────────────────────────────────────────────
   db:
     build:
-      context: .
-      dockerfile: Dockerfile.db
-    restart: unless-stopped
+      context: .                  # Busca el Dockerfile en el directorio actual
+      dockerfile: Dockerfile.db   # Usa nuestro Dockerfile personalizado (postgres + tzdata)
+    restart: unless-stopped       # Si el contenedor se cae, Docker lo reinicia automáticamente
+                                  # (excepto si lo apagamos nosotros con "docker-compose stop")
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo_pass
+      POSTGRES_DB: postgres        # Nombre de la base de datos inicial que crea PostgreSQL
+      POSTGRES_USER: odoo          # Usuario administrador de la base de datos
+      POSTGRES_PASSWORD: odoo_pass # Contraseña del usuario "odoo"
     volumes:
+      # Volumen nombrado: guarda los datos de la BD en disco, fuera del contenedor.
+      # Si borramos el contenedor, los datos NO se pierden.
       - odoo-db-data:/var/lib/postgresql/data
 
+  # ─── SERVICIO: Aplicación Odoo ──────────────────────────────────────────────
   web:
-    image: odoo:17.0
+    image: odoo:17.0              # Descarga la imagen oficial de Odoo versión 17 desde Docker Hub
     restart: unless-stopped
     depends_on:
-      - db
+      - db                        # No arranca hasta que el contenedor "db" esté corriendo
     ports:
+      # Mapeo de puertos: HOST:CONTENEDOR
+      # El puerto 8069 del contenedor queda expuesto como el puerto 8069 del servidor.
+      # Así podemos acceder a Odoo desde el navegador en http://<ip-del-servidor>:8069
       - "8069:8069"
     environment:
-      HOST: db
-      USER: odoo
+      HOST: db          # Le indica a Odoo el nombre del host de la BD (el nombre del servicio Docker)
+      USER: odoo        # Usuario de la base de datos
       PASSWORD: odoo_pass
     volumes:
+      # Persiste los datos internos de Odoo (adjuntos, sesiones, etc.)
       - odoo-web-data:/var/lib/odoo
+      # Monta la carpeta local "config/" como la carpeta de configuración de Odoo
+      # Así nuestro odoo.conf es leído por la aplicación
       - ./config:/etc/odoo
+      # Monta la carpeta local "addons/" para instalar módulos personalizados
       - ./addons:/mnt/extra-addons
 
+# ─────────────────────────────────────────────────────────────────────────────
+# VOLÚMENES NOMBRADOS
+# Docker administra estos volúmenes. Persisten aunque los contenedores sean
+# destruidos y recreados. Para borrarlos hay que hacerlo explícitamente
+# con "docker volume rm".
+# ─────────────────────────────────────────────────────────────────────────────
 volumes:
-  odoo-db-data:
-  odoo-web-data:
+  odoo-db-data:  # Datos de PostgreSQL
+  odoo-web-data: # Datos internos de Odoo
