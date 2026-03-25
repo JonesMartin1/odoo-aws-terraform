@@ -120,7 +120,7 @@ resource "aws_key_pair" "odoo_key" {
 
 resource "aws_instance" "odoo" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t3.medium"
+  instance_type          = "t3a.medium"
   subnet_id              = aws_subnet.odoo_subnet.id
   vpc_security_group_ids = [aws_security_group.odoo_sg.id]
   key_name               = aws_key_pair.odoo_key.key_name

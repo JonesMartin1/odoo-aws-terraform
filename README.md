@@ -151,6 +151,6 @@ Escribe `yes`. Esto elimina todos los recursos para que no generen costos.
 
 ## Advertencias
 
-- **Costo:** Una instancia `t3.medium` en sa-east-1 cuesta aproximadamente **$0.05 USD/hora**. Recuerda hacer `terraform destroy` cuando no la necesites.
+- **Costo:** Una instancia `t3a.medium` en sa-east-1 cuesta aproximadamente **$0.0605 USD/hora** (~$44/mes). Recuerda hacer `terraform destroy` cuando no la necesites.
 - **Credenciales:** Nunca compartas tu `Access Key ID` ni `Secret Access Key`. Si lo haces accidentalmente, ve a IAM y elimínalas inmediatamente.
 - **SSH Key:** Guarda el archivo `odoo-key` en un lugar seguro. Sin él no puedes conectarte al servidor.
